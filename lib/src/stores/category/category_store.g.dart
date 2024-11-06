@@ -21,13 +21,13 @@ mixin _$CategoryStore on _CategoryStoreBase, Store {
       Atom(name: '_CategoryStoreBase.error', context: context);
 
   @override
-  String? get error {
+  String get error {
     _$errorAtom.reportRead();
     return super.error;
   }
 
   @override
-  set error(String? value) {
+  set error(String value) {
     _$errorAtom.reportWrite(value, super.error, () {
       super.error = value;
     });
@@ -37,22 +37,22 @@ mixin _$CategoryStore on _CategoryStoreBase, Store {
       ActionController(name: '_CategoryStoreBase', context: context);
 
   @override
-  void setError(String value) {
+  void setCategories(List<CategoryModel> categories) {
     final _$actionInfo = _$_CategoryStoreBaseActionController.startAction(
-        name: '_CategoryStoreBase.setError');
+        name: '_CategoryStoreBase.setCategories');
     try {
-      return super.setError(value);
+      return super.setCategories(categories);
     } finally {
       _$_CategoryStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void setCategories(List<CategoryModel> categories) {
+  void setError(String value) {
     final _$actionInfo = _$_CategoryStoreBaseActionController.startAction(
-        name: '_CategoryStoreBase.setCategories');
+        name: '_CategoryStoreBase.setError');
     try {
-      return super.setCategories(categories);
+      return super.setError(value);
     } finally {
       _$_CategoryStoreBaseActionController.endAction(_$actionInfo);
     }

@@ -17,19 +17,19 @@ mixin _$UserManagerStore on _UserManagerStore, Store {
               name: '_UserManagerStore.isLoggedIn'))
           .value;
 
-  late final _$userModelAtom =
-      Atom(name: '_UserManagerStore.userModel', context: context);
+  late final _$userAtom =
+      Atom(name: '_UserManagerStore.user', context: context);
 
   @override
-  UserModel? get userModel {
-    _$userModelAtom.reportRead();
-    return super.userModel;
+  UserModel get user {
+    _$userAtom.reportRead();
+    return super.user;
   }
 
   @override
-  set userModel(UserModel? value) {
-    _$userModelAtom.reportWrite(value, super.userModel, () {
-      super.userModel = value;
+  set user(UserModel value) {
+    _$userAtom.reportWrite(value, super.user, () {
+      super.user = value;
     });
   }
 
@@ -50,7 +50,7 @@ mixin _$UserManagerStore on _UserManagerStore, Store {
   @override
   String toString() {
     return '''
-userModel: ${userModel},
+user: ${user},
 isLoggedIn: ${isLoggedIn}
     ''';
   }

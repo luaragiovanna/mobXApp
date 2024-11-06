@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_box_project/src/pages/home/components/vendor_type_field.dart';
 
 import 'package:flutter_box_project/src/pages/home/filter/order_by_field.dart';
 import 'package:flutter_box_project/src/pages/home/filter/price_range_field.dart';
@@ -42,6 +43,7 @@ class FilterPage extends StatelessWidget {
                 PriceRangeField(
                   filterStore: filterStore,
                 ),
+                VendorTypeField(filterStore),
               ],
             ),
           ),

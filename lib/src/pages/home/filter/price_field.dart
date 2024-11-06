@@ -19,7 +19,7 @@ class PriceField extends StatelessWidget {
       child: TextFormField(
         onChanged: (text) {
           //passar pro priceRangeFilter pra settar fora do pricefield
-          onChanged(int.tryParse(text.replaceAll('.', ''))!);
+          //onChanged(int.tryParse(text.replaceAll('.', ''))!);
         },
         initialValue: initialValue.toString(),
         decoration: InputDecoration(

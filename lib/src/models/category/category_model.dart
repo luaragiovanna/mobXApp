@@ -8,7 +8,7 @@ class CategoryModel {
    late String description;
   CategoryModel({
       required this.id,
-      required this.description,
+      required this.description, required String name,
   });
 
   CategoryModel.fromParse(ParseObject parseObject) {

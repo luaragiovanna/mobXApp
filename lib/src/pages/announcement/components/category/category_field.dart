@@ -6,7 +6,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 class CategoryField extends StatelessWidget {
   final CreateStore createStore;
-  CategoryField({super.key, required this.createStore});
+  const CategoryField({super.key, required this.createStore});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class CategoryField extends StatelessWidget {
                     'Categorias',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.grey,
+                        color: Colors.black,
                         fontSize: 17),
                   )
                 : Text(
@@ -27,7 +27,7 @@ class CategoryField extends StatelessWidget {
                         .category.description, // Exibe a descrição da categoria
                     style: const TextStyle(
                         fontWeight: FontWeight.w700,
-                        color: Colors.grey,
+                        color: Colors.black,
                         fontSize: 17),
                   ),
             trailing: const Icon(Icons.keyboard_arrow_down),

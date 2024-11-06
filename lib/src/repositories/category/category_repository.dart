@@ -5,19 +5,13 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
 class CategoryRepository {
   Future<List<CategoryModel>> getList() async {
-    // Criação do QueryBuilder
     final queryBuilder = QueryBuilder(ParseObject(keyCategoryTable))
       ..orderByAscending(keyCategoryDescription);
 
-    // Realiza a consulta
     final response = await queryBuilder.query();
 
     if (response.success) {
-      // Mapeia os resultados para uma lista de CategoryModel
-      return response.results!
-          .map((e) => CategoryModel.fromParse(e))
-          .toList()
-          .cast<CategoryModel>();
+      return response.results!.map((p) => CategoryModel.fromParse(p)).toList();
     } else {
       throw ParseErrors.getDescription(response.error!.code);
     }

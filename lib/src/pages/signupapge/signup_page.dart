@@ -58,6 +58,8 @@ class SignUpPage extends StatelessWidget {
                           errorText: signupStore.nameError,
                         ),
                         onChanged: signupStore.setName,
+                        keyboardType: TextInputType.name,
+                        keyboardAppearance: Brightness.light,
                       );
                     },
                   ),

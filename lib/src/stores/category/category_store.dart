@@ -1,24 +1,28 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_box_project/src/models/category/category_model.dart';
 import 'package:flutter_box_project/src/repositories/category/category_repository.dart';
+import 'package:flutter_box_project/src/stores/connectivity/connectivity_store.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 part 'category_store.g.dart';
 
 class CategoryStore = _CategoryStoreBase with _$CategoryStore;
 
 abstract class _CategoryStoreBase with Store {
-  ObservableList<CategoryModel> categoryList = ObservableList<
-      CategoryModel>(); //  modificando observableList tem q  settar por meio de action
+  final ConnectivityStore connectivityStore = GetIt.I<ConnectivityStore>();
 
-  //
-  _CategoryStoreBase() {
-    _loadCategories();
+  _CategoryStore() {
+    autorun((_) {
+      if (connectivityStore.connected && categoryList.isEmpty)
+        _loadCategories();
+    });
   }
-  @observable
-  String? error;
 
-  @action
-  void setError(String value) => error = value;
+  ObservableList<CategoryModel> categoryList = ObservableList<CategoryModel>();
+
+  @computed
+  List<CategoryModel> get allCategoryList => List.from(categoryList)
+    ..insert(0, CategoryModel(id: '*', description: 'Todas', name: ''));
 
   @action
   void setCategories(List<CategoryModel> categories) {
@@ -26,18 +30,18 @@ abstract class _CategoryStoreBase with Store {
     categoryList.addAll(categories);
   }
 
+  @observable
+  String error = '';
+
+  @action
+  void setError(String value) => error = value;
+
   Future<void> _loadCategories() async {
     try {
-      //acessar repo e salvar categorias aq
       final categories = await CategoryRepository().getList();
-      //setar lista de categorias
-      setCategories(categories);
+      setCategories(categories.cast<CategoryModel>());
     } catch (e) {
       setError(e.toString());
     }
   }
-
-  @computed
-  List<CategoryModel> get allCategoryList => List.from(categoryList)
-    ..insert(0, CategoryModel(id: '*', description: 'Todas'));
 }

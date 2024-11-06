@@ -46,6 +46,17 @@ dependencies:
   dio: ^5.7.0
   shared_preferences: ^2.2.3
   path: ^1.9.0
+  cached_network_image: 
+  intl:
+  flutter_localizations:
+    sdk: flutter
+  another_carousel_pro: ^1.0.2
+  readmore: ^3.0.0
+  toggle_switch: 
+  data_connection_checker_tv: ^0.3.5-nullsafety
+  onesignal_flutter: ^5.2.7
+  
+  
 
 
  

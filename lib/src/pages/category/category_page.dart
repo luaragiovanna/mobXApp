@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_box_project/src/components/error/error_box.dart';
 import 'package:flutter_box_project/src/models/category/category_model.dart';

@@ -1,10 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class Uf {
-  int id;
+  int? id;
   String initials;
   String name;
   Uf({
-    required this.id,
+    this.id,
     required this.initials,
     required this.name,
   });

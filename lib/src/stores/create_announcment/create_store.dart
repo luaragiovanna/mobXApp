@@ -21,7 +21,7 @@ abstract class _CreateStore with Store {
       ObservableList(); //sempre q add uma nova img atualiza baloes
 
   @observable
-  CategoryModel category = CategoryModel(id: '', description: '');
+  CategoryModel category = CategoryModel(id: '', description: '', name: '');
 
   @observable
   String title = '';
@@ -190,7 +190,7 @@ abstract class _CreateStore with Store {
 
   void _send() async {
     final ad = Ad(
-        user: GetIt.I<UserManagerStore>().userModel,
+        user: GetIt.I<UserManagerStore>().user,
         images: images,
         id: '',
         title: title,

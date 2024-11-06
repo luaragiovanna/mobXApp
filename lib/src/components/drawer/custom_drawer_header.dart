@@ -11,7 +11,7 @@ class CustomDrawerHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    userManagerStore.userModel; //acessar o usuario logado
+    userManagerStore.user; //acessar o usuario logado
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pop(); //drawer n fika aberto
@@ -25,7 +25,7 @@ class CustomDrawerHeader extends StatelessWidget {
       child: Container(
         color: Colors.pink.shade200,
         height: 95,
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(
           children: [
             const Icon(
@@ -43,7 +43,7 @@ class CustomDrawerHeader extends StatelessWidget {
                 children: [
                   Text(
                     userManagerStore.isLoggedIn
-                        ? userManagerStore.userModel!.name.toString()
+                        ? userManagerStore.user!.name.toString()
                         : 'Entrar?',
                     style: const TextStyle(
                         color: Colors.white,
@@ -52,9 +52,9 @@ class CustomDrawerHeader extends StatelessWidget {
                   ),
                   Text(
                     userManagerStore.isLoggedIn
-                        ? userManagerStore.userModel!.email
+                        ? userManagerStore.user!.email
                         : 'Clique aqui',
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.white, fontWeight: FontWeight.w400),
                   ),
                 ],

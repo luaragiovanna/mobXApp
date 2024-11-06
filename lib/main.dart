@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_box_project/src/models/category/category_model.dart';
 import 'package:flutter_box_project/src/pages/base/base_page.dart';
-import 'package:flutter_box_project/src/pages/category/category_page.dart';
+
 import 'package:flutter_box_project/src/pages/home/filter/filter_page.dart';
-import 'package:flutter_box_project/src/repositories/category/category_repository.dart';
+
 import 'package:flutter_box_project/src/repositories/ibge_api/cep_repository.dart';
-import 'package:flutter_box_project/src/repositories/ibge_api/ibge_repository.dart';
+
 import 'package:flutter_box_project/src/stores/category/category_store.dart';
+import 'package:flutter_box_project/src/stores/connectivity/connectivity_store.dart';
 import 'package:flutter_box_project/src/stores/home/filter/filter_store.dart';
 import 'package:flutter_box_project/src/stores/home/home_store.dart';
 import 'package:flutter_box_project/src/stores/page/page_store.dart';
+import 'package:flutter_box_project/src/stores/user/favorite_store.dart';
 import 'package:flutter_box_project/src/stores/user/user_manager_store.dart';
 import 'package:get_it/get_it.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
 void main() async {
+  //OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+  //OneSignal.initialize("81280b13-f804-4870-8edd-91c0eb8c591a");
+  //OneSignal.Notifications.requestPermission(true);
+
   WidgetsFlutterBinding.ensureInitialized();
   await initializeParse(); //so roda quando initializa o parse
   setupLocators();
   runApp(const MyApp());
-  CepRepository().getAddressFromApi('85035-160').toString();
+  //CepRepository().getAddressFromApi('85035-160').toString();
 }
 // await Parse().initialize('NhSkVJlp660WvEpFrv4V9xt4rqB1E6ELMJ9eCdMm',
 //     'https://parseapi.back4app.com',
@@ -63,6 +69,7 @@ Future<void> initializeParse() async {
 }
 
 void setupLocators() {
+  GetIt.I.registerSingleton(ConnectivityStore());
   GetIt.I.registerSingleton(
       UserManagerStore()); //instancia acessivel de qualquer parte do app
   //get it -> localizar servicos do app
@@ -70,6 +77,7 @@ void setupLocators() {
   GetIt.I.registerSingleton(HomeStore());
   GetIt.I.registerSingleton(FilterStore());
   GetIt.I.registerSingleton(PageStore()); //obter de qualquer local do app
+  GetIt.I.registerSingleton(FavoriteStore());
 }
 
 class MyApp extends StatelessWidget {
@@ -79,15 +87,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'XLO',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: FilterPage(
-        filterStore: FilterStore(),
-      ),
-    );
+        title: 'XLO',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        debugShowCheckedModeBanner: false,
+        home: BasePage());
   }
 }

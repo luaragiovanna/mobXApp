@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_box_project/src/components/card/empty_card.dart';
 import 'package:flutter_box_project/src/components/drawer/custom_drawer.dart';
+import 'package:flutter_box_project/src/models/category/category_model.dart';
 import 'package:flutter_box_project/src/pages/home/components/search_dialog.dart';
 import 'package:flutter_box_project/src/pages/home/components/top_bar.dart';
 import 'package:flutter_box_project/src/stores/home/home_store.dart';
@@ -7,6 +9,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 class HomePage extends StatelessWidget {
+  final CategoryModel categoryModel =
+      CategoryModel(id: '', description: '', name: '');
   final HomeStore homeStore = GetIt.I<HomeStore>();
   HomePage({super.key});
   openSearch(BuildContext context) async {
@@ -28,6 +32,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        drawer: const CustomDrawer(),
         appBar: AppBar(
           backgroundColor: Colors.pink.shade100,
           title: Observer(
@@ -69,14 +74,14 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-        drawer: const CustomDrawer(),
         body: Column(
           children: [
-            TopBar(),
+            TopBar(
+              categoryModel: categoryModel,
+            ),
           ],
         ),
       ),
-      
     );
   }
 }

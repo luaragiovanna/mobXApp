@@ -12,7 +12,7 @@ class OrderByField extends StatelessWidget {
     Widget buildOption(String title, OrderBy option) {
       return GestureDetector(
         onTap: () {
-          filter.setOrderBy(option);
+          filter.serOrderBy(option);
         },
         child: Container(
           height: 50,

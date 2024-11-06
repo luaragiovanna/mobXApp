@@ -20,22 +20,22 @@ class CustomPageSection extends StatelessWidget {
             },
             highlighted: pageStore.page == 0),
         PageTile(
-            label: 'Favoritos',
-            iconData: Icons.favorite,
+            label: 'Criar Anuncio',
+            iconData: Icons.post_add,
             onTap: () {
               pageStore.setPage(1);
             },
             highlighted: pageStore.page == 0),
         PageTile(
-            label: 'Inserir Anúncio',
-            iconData: Icons.post_add,
+            label: 'Chat',
+            iconData: Icons.comment,
             onTap: () {
               pageStore.setPage(2);
             },
             highlighted: pageStore.page == 0),
         PageTile(
-            label: 'Chat',
-            iconData: Icons.chat,
+            label: 'Fvoritos',
+            iconData: Icons.heart_broken,
             onTap: () {
               pageStore.setPage(3);
             },

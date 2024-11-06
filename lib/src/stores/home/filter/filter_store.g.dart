@@ -8,9 +8,31 @@ part of 'filter_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$FilterStore on _FilterStoreBase, Store {
+mixin _$FilterStore on _FilterStore, Store {
+  Computed<String>? _$priceErrorComputed;
+
+  @override
+  String get priceError =>
+      (_$priceErrorComputed ??= Computed<String>(() => super.priceError,
+              name: '_FilterStore.priceError'))
+          .value;
+  Computed<bool>? _$isTypeParticularComputed;
+
+  @override
+  bool get isTypeParticular => (_$isTypeParticularComputed ??= Computed<bool>(
+          () => super.isTypeParticular,
+          name: '_FilterStore.isTypeParticular'))
+      .value;
+  Computed<bool>? _$isFormValidComputed;
+
+  @override
+  bool get isFormValid =>
+      (_$isFormValidComputed ??= Computed<bool>(() => super.isFormValid,
+              name: '_FilterStore.isFormValid'))
+          .value;
+
   late final _$orderByAtom =
-      Atom(name: '_FilterStoreBase.orderBy', context: context);
+      Atom(name: '_FilterStore.orderBy', context: context);
 
   @override
   OrderBy get orderBy {
@@ -26,7 +48,7 @@ mixin _$FilterStore on _FilterStoreBase, Store {
   }
 
   late final _$minPriceAtom =
-      Atom(name: '_FilterStoreBase.minPrice', context: context);
+      Atom(name: '_FilterStore.minPrice', context: context);
 
   @override
   int get minPrice {
@@ -42,7 +64,7 @@ mixin _$FilterStore on _FilterStoreBase, Store {
   }
 
   late final _$maxPriceAtom =
-      Atom(name: '_FilterStoreBase.maxPrice', context: context);
+      Atom(name: '_FilterStore.maxPrice', context: context);
 
   @override
   int get maxPrice {
@@ -57,39 +79,66 @@ mixin _$FilterStore on _FilterStoreBase, Store {
     });
   }
 
-  late final _$_FilterStoreBaseActionController =
-      ActionController(name: '_FilterStoreBase', context: context);
+  late final _$vendorTypeAtom =
+      Atom(name: '_FilterStore.vendorType', context: context);
 
   @override
-  void setOrderBy(OrderBy value) {
-    final _$actionInfo = _$_FilterStoreBaseActionController.startAction(
-        name: '_FilterStoreBase.setOrderBy');
+  int get vendorType {
+    _$vendorTypeAtom.reportRead();
+    return super.vendorType;
+  }
+
+  @override
+  set vendorType(int value) {
+    _$vendorTypeAtom.reportWrite(value, super.vendorType, () {
+      super.vendorType = value;
+    });
+  }
+
+  late final _$_FilterStoreActionController =
+      ActionController(name: '_FilterStore', context: context);
+
+  @override
+  void serOrderBy(OrderBy value) {
+    final _$actionInfo = _$_FilterStoreActionController.startAction(
+        name: '_FilterStore.serOrderBy');
     try {
-      return super.setOrderBy(value);
+      return super.serOrderBy(value);
     } finally {
-      _$_FilterStoreBaseActionController.endAction(_$actionInfo);
+      _$_FilterStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setMinPrice(int value) {
-    final _$actionInfo = _$_FilterStoreBaseActionController.startAction(
-        name: '_FilterStoreBase.setMinPrice');
+    final _$actionInfo = _$_FilterStoreActionController.startAction(
+        name: '_FilterStore.setMinPrice');
     try {
       return super.setMinPrice(value);
     } finally {
-      _$_FilterStoreBaseActionController.endAction(_$actionInfo);
+      _$_FilterStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setMaxPrice(int value) {
-    final _$actionInfo = _$_FilterStoreBaseActionController.startAction(
-        name: '_FilterStoreBase.setMaxPrice');
+    final _$actionInfo = _$_FilterStoreActionController.startAction(
+        name: '_FilterStore.setMaxPrice');
     try {
       return super.setMaxPrice(value);
     } finally {
-      _$_FilterStoreBaseActionController.endAction(_$actionInfo);
+      _$_FilterStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void selectVendorType(int value) {
+    final _$actionInfo = _$_FilterStoreActionController.startAction(
+        name: '_FilterStore.selectVendorType');
+    try {
+      return super.selectVendorType(value);
+    } finally {
+      _$_FilterStoreActionController.endAction(_$actionInfo);
     }
   }
 
@@ -98,7 +147,11 @@ mixin _$FilterStore on _FilterStoreBase, Store {
     return '''
 orderBy: ${orderBy},
 minPrice: ${minPrice},
-maxPrice: ${maxPrice}
+maxPrice: ${maxPrice},
+vendorType: ${vendorType},
+priceError: ${priceError},
+isTypeParticular: ${isTypeParticular},
+isFormValid: ${isFormValid}
     ''';
   }
 }

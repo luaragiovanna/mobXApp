@@ -1,12 +1,13 @@
-const keyUsername = 'name';
+const keyUserId = 'objectId';
+const keyUserName = 'name';
 const keyUserEmail = 'email';
 const keyUserPhone = 'phone';
-const keyUserType = 'userType';
+const keyUserType = 'type';
 const keyUserCreatedAt = 'createdAt';
-const keyUserId = 'objectId';
-const keyCategoryId = 'objectId';
+
 const keyCategoryTable = 'Categories';
-const keyCategoryDescription = 'Description';
+const keyCategoryId = 'objectId';
+const keyCategoryDescription = 'description';
 
 const String keyAdTable = 'Ad';
 const String keyAdId = 'objectId';
@@ -15,7 +16,6 @@ const String keyAdDescription = 'description';
 const String keyAdHidePhone = 'hidePhone';
 const String keyAdPrice = 'price';
 const String keyAdStatus = 'status';
-
 const String keyAdDistrict = 'district';
 const String keyAdCity = 'city';
 const String keyAdPostalCode = 'postalCode';
@@ -26,4 +26,7 @@ const String keyAdOwner = 'owner';
 const String keyAdCreatedAt = 'createdAt';
 const String keyAdViews = 'views';
 
-//nome da coluna
+const String keyFavoritesTable = 'Favorites';
+const String keyFavoritesId = 'objectId';
+const String keyFavoritesAd = 'ad';
+const String keyFavoritesOwner = 'owner';
