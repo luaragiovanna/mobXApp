@@ -57,7 +57,7 @@ class _CreateScreenState extends State<CreateAnnouncement> {
       fontSize: 18,
     );
 
-    const contentPadding = EdgeInsets.fromLTRB(16, 10, 12, 10);
+    const contentPadding = EdgeInsets.fromLTRB(10, 10, 12, 10);
 
     return Scaffold(
       drawer: editing ? null : const CustomDrawer(),
@@ -70,27 +70,32 @@ class _CreateScreenState extends State<CreateAnnouncement> {
         child: SingleChildScrollView(
           child: Card(
             clipBehavior: Clip.antiAlias,
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+              ),
+            ),
+            color: const Color.fromARGB(255, 242, 236, 236),
             elevation: 8,
             child: Observer(
               builder: (_) {
                 if (createStore.loading) {
                   return const Padding(
-                    padding: EdgeInsets.all(16),
+                    padding: EdgeInsets.all(10),
                     child: Column(
                       children: [
                         Text(
-                          'Salvando Anúncio',
+                          'Salvando anuncio',
                           style: TextStyle(fontSize: 18, color: Colors.purple),
                         ),
                         SizedBox(
-                          height: 16,
+                          height: 10,
                         ),
                         CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation(Colors.purple),
-                        )
+                          valueColor: AlwaysStoppedAnimation(Colors.pink),
+                        ),
                       ],
                     ),
                   );
@@ -101,31 +106,24 @@ class _CreateScreenState extends State<CreateAnnouncement> {
                     children: [
                       ImagesField(createStore: createStore),
                       _buildTextFormField(
-                        label: 'Título *',
-                        initialValue: createStore.title,
+                        //TITULO
+                        label: 'Title',
+                        initialValue: '',
                         onChanged: createStore.setTitle,
                         errorText: createStore.titleError,
+                        maxLines: 2,
                       ),
                       _buildTextFormField(
-                        label: 'Descrição *',
-                        initialValue: createStore.description,
+                        label: 'Description',
+                        initialValue: '',
                         onChanged: createStore.setDescription,
                         errorText: createStore.descriptionError,
-                        maxLines: null,
                       ),
-                      CategoryField(createStore: createStore),
-                      CepField(createStore),
                       _buildTextFormField(
-                        label: 'Preço *',
-                        initialValue: createStore.priceText,
+                        label: 'Price',
+                        initialValue: '',
                         onChanged: createStore.setPrice,
                         errorText: createStore.priceError,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                          RealInputFormatter(moeda: true),
-                        ],
-                        prefixText: 'R\$ ',
                       ),
                       HidephoneField(createStore: createStore),
                       Observer(builder: (_) {
@@ -133,19 +131,16 @@ class _CreateScreenState extends State<CreateAnnouncement> {
                       }),
                       Observer(builder: (_) {
                         return SizedBox(
-                          height: 50,
+                          height: 30,
                           child: GestureDetector(
                             onTap: createStore.invalidSendPressed,
                             child: ElevatedButton(
-                              child: const Text(
-                                'Enviar',
-                                style: TextStyle(fontSize: 18),
-                              ),
                               onPressed: createStore.sendPressed,
+                              child: const Text('Send'),
                             ),
                           ),
                         );
-                      }),
+                      })
                     ],
                   );
                 }

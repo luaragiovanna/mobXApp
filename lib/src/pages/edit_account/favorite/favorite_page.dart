@@ -17,24 +17,30 @@ class FavoritePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(bottomRight: Radius.circular(22)),
+        ),
         title: const Text('Favoritos'),
         centerTitle: true,
       ),
       drawer: hideDrawer ? null : const CustomDrawer(),
-      body: Observer(builder: (_) {
-        if (favoriteStore.favoriteList.isEmpty)
-          return const EmptyCard(
-            text: 'Nenhum anúncio favoritado.',
-          );
+      body: Observer(
+        builder: (_) {
+          if (favoriteStore.favoriteList.isEmpty)
+            return const EmptyCard(
+              text: 'Nenhum anúncio favoritado.',
+            );
 
-        return ListView.builder(
-          padding: EdgeInsets.all(2),
-          itemCount: favoriteStore.favoriteList.length,
-          itemBuilder: (_, index) => FavoriteTile(
-            favoriteStore: favoriteStore,
-          ), //img dados do anuncio e botao pra exluir fav
-        );
-      }),
+          return ListView.builder(
+            padding: EdgeInsets.all(2),
+            itemCount: favoriteStore.favoriteList.length,
+            itemBuilder: (_, index) => FavoriteTile(
+              favoriteStore: favoriteStore,
+            ), //img dados do anuncio e botao pra exluir fav
+          );
+        },
+      ),
+      backgroundColor: Colors.grey.shade200,
     );
   }
 }

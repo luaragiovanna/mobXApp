@@ -33,7 +33,9 @@ class TopBar extends StatelessWidget {
                 bottom: BorderSide(color: Colors.pink.shade100),
               ),
             ),
-            label: homeStore.category?.description ?? 'Categorias',
+            label: homeStore.category.description.isEmpty
+                ? 'Categorias'
+                : homeStore.category.description,
             onTap: () {
               // Atualizar a categoria no homeStore antes de navegar
               if (categoryModel.id.isEmpty ||
@@ -46,7 +48,7 @@ class TopBar extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (_) => CategoryPage(
                     showAll: true,
-                    selected: categoryModel!,
+                    selected: categoryModel,
                   ),
                 ),
               );
