@@ -4,10 +4,8 @@ import 'package:flutter_box_project/src/helpers/extensions.dart';
 import 'package:flutter_box_project/src/models/ad/ad.dart';
 import 'package:flutter_box_project/src/stores/user/my_ads_store.dart';
 
-
 class SoldTile extends StatelessWidget {
   SoldTile(this.ad, this.store);
-
 
   final Ad ad;
   final MyAdsStore store; //pra deletar anuncio
@@ -39,7 +37,7 @@ class SoldTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      ad.title,
+                      ad.title!,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),

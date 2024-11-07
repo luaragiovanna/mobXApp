@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_box_project/src/models/ad/ad.dart';
 import 'package:readmore/readmore.dart';
 
-
 class DescriptionPanel extends StatelessWidget {
   DescriptionPanel(this.ad);
 

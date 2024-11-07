@@ -5,6 +5,7 @@ import 'package:flutter_box_project/src/repositories/user/user_repository.dart';
 import 'package:flutter_box_project/src/stores/user/user_manager_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+
 part 'edit_account_store.g.dart';
 
 class EditAccountStore = _EditAccountStoreBase with _$EditAccountStore;
@@ -13,8 +14,7 @@ abstract class _EditAccountStoreBase with Store {
   _EditAccountStore() {
     user = userManagerStore.user!;
 
-    ///setando valores antigos
-
+    /// Setando valores antigos
     userType = user.userType;
     name = user.name;
     phone = user.phone;
@@ -37,9 +37,8 @@ abstract class _EditAccountStoreBase with Store {
   void setName(String value) => name = value;
 
   @computed
-  bool get nameValid => name != null && name.length >= 6;
-  String get nameError =>
-      nameValid || name.isNotEmpty ? '' : 'Campo obrigatório';
+  bool get nameValid => name.isNotEmpty && name.length >= 6;
+  String get nameError => nameValid ? '' : 'Campo obrigatório';
 
   @observable
   String phone = '';
@@ -48,9 +47,8 @@ abstract class _EditAccountStoreBase with Store {
   void setPhone(String value) => phone = value;
 
   @computed
-  bool get phoneValid => phone != null && phone.length >= 14;
-  String get phoneError =>
-      phoneValid || phone.isNotEmpty ? '' : 'Campo obrigatório';
+  bool get phoneValid => phone.isNotEmpty && phone.length >= 14;
+  String get phoneError => phoneValid ? '' : 'Campo obrigatório';
 
   @observable
   String pass1 = '';
@@ -67,9 +65,8 @@ abstract class _EditAccountStoreBase with Store {
   @computed
   bool get passValid => pass1 == pass2 && (pass1.length >= 6 || pass1.isEmpty);
   String get passError {
-    if (pass1.isNotEmpty && pass1.length < 6)
-      return 'Senha muito curta';
-    else if (pass1 != pass2) return 'Senhas não coincidem';
+    if (pass1.isNotEmpty && pass1.length < 6) return 'Senha muito curta';
+    if (pass1 != pass2) return 'Senhas não coincidem';
     return '';
   }
 
@@ -80,30 +77,26 @@ abstract class _EditAccountStoreBase with Store {
   bool loading = false;
 
   @computed
-  VoidCallback? get savePressed => (isFormValid && !loading)
-      ? _save
-      : null; //se formulario é valido retorna funcao save ou desabilita botao
-  //enq estiver carregando desabilita botao
+  VoidCallback? get savePressed => (isFormValid && !loading) ? _save : null;
+
   @action
   Future<void> _save() async {
-    //carregando. . .
     loading = true;
-    //salvar dados do usuario //objeto user
-    //salva atributos atualizados
-    user.name = name;
-    user.phone = phone;
-    user.userType = userType;
 
-    if (pass1.isNotEmpty) {
-      //se alterou a senha
-      user.password = pass1;
-    } else {
-      user.password; //n alterou a senha guardar em uma varaivel a senha atual
-    }
+    // Crie uma nova instância de UserModel com os dados atualizados
+    final updatedUser = UserModel(
+      id: user.id,
+      name: name,
+      email: user.email,
+      phone: phone,
+      password: pass1.isNotEmpty ? pass1 : user.password,
+      userType: userType,
+      createdAt: user.createdAt,
+    );
 
     try {
-      await UserRepository().save(user);
-      userManagerStore.setUser(user);
+      await UserRepository().save(updatedUser);
+      userManagerStore.setUser(updatedUser);
     } catch (e) {
       print(e);
     }

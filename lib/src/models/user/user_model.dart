@@ -1,28 +1,25 @@
-
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 class UserModel {
-  String name;
-  String email;
-  String phone;
-  String password;
-  UserType userType;
-  String id;
-  DateTime createdAt;
   UserModel({
+    required this.id,
+    required this.password,
     required this.name,
     required this.email,
     required this.phone,
-     this.password = '',
     this.userType = UserType.PARTICULAR,
-    required this.id,
     required this.createdAt,
   });
 
- 
+  final String id;
+  final String name;
+  final String email;
+  final String phone;
+  final UserType userType;
+  final DateTime createdAt;
+  final String password;
 
   @override
   String toString() {
-    return 'UserModel(name: $name, email: $email, phone: $phone, password: $password, userType: $userType, id: $id, createdAt: $createdAt)';
+    return 'UserModel(id: $id, name: $name, email: $email, phone: $phone, userType: $userType, createdAt: $createdAt)';
   }
 }
 

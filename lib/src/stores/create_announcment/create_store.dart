@@ -1,14 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/foundation.dart';
-import 'package:flutter_box_project/src/models/ad/ad.dart';
+import 'package:flutter_box_project/src/models/ad/ad.dart' as ad_model;
+import 'package:flutter_box_project/src/models/category/category_model.dart';
 import 'package:flutter_box_project/src/models/ibge/address.dart';
 import 'package:flutter_box_project/src/repositories/ad/ad_repository.dart';
 import 'package:flutter_box_project/src/stores/cep/cep_store.dart';
 import 'package:flutter_box_project/src/stores/user/user_manager_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
-
-import 'package:flutter_box_project/src/models/category/category_model.dart';
 
 part 'create_store.g.dart';
 
@@ -162,52 +160,33 @@ abstract class _CreateStore with Store {
   @observable
   String error = '';
 
-  // void _send() async {
-  //   final ad = Ad(
-  //       user: GetIt.I<UserManagerStore>().userModel,
-  //       images: images,
-  //       id: '',
-  //       title: title,
-  //       description: description,
-  //       category: category,
-  //       price: price,
-  //       createdDate: DateTime.now(),
-  //       hidePhone: hidePhone,
-  //       views: 0);
-  //   error = 'Falha ao salvar';
-
-  //   loading = true;
-  //   try {
-  //     final response = await AdRepository().save(ad);
-  //   } catch (e) {
-  //     error = e.toString();
-  //   }
-  //   loading = false;
-  // }
-
   @observable
   bool savedAd = false;
 
   void _send() async {
-    final ad = Ad(
-        user: GetIt.I<UserManagerStore>().user,
-        images: images,
-        id: '',
-        title: title,
-        description: description,
-        category: category,
-        price: price,
-        createdDate: DateTime.now(),
-        hidePhone: hidePhone,
-        views: 0);
-    error = 'Falha ao salvar';
+    if (!formValid) {
+      showErrors = true;
+      return;
+    }
+
+    final ad = ad_model.Ad(
+      user: GetIt.I<UserManagerStore>().user!,
+      images: images,
+      title: title ?? '',
+      description: description ?? '',
+      category: category,
+      price: price,
+      hidePhone: hidePhone,
+      views: 0,
+      createdAt: DateTime.now(),
+    );
 
     loading = true;
     try {
       await AdRepository().save(ad);
       savedAd = true;
     } catch (e) {
-      error = e.toString();
+      error = 'Falha ao salvar anúncio';
     }
     loading = false;
   }

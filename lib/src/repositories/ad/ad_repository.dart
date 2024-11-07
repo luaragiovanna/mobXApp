@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter_box_project/src/models/ad/ad.dart' as ad;
 import 'package:flutter_box_project/src/models/ad/ad.dart';
 import 'package:flutter_box_project/src/models/category/category_model.dart';
 import 'package:flutter_box_project/src/models/user/user_model.dart';
@@ -10,7 +11,7 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:path/path.dart' as path;
 
 class AdRepository {
-  Future<List<Ad>> getHomeAdList({
+  Future<List<ad.Ad>> getHomeAdList({
     required FilterStore filter,
     required String search,
     required CategoryModel category,
@@ -74,7 +75,7 @@ class AdRepository {
 
       final response = await queryBuilder.query();
       if (response.success && response.results != null) {
-        return response.results!.map((po) => Ad.fromParse(po)).toList();
+        return response.results!.map((po) => ad.Ad.fromParse(po)).toList();
       } else if (response.success && response.results == null) {
         return [];
       } else {
@@ -85,49 +86,48 @@ class AdRepository {
     }
   }
 
-  Future<void> save(Ad ad) async {
-  try {
-    final parseImages = await saveImages(ad.images);
+  Future<void> save(ad.Ad ad) async {
+    try {
+      final parseImages = await saveImages(ad.images);
 
-    final parseUser = ParseUser('', '', '')..set(keyUserId, ad.user.id); // Aqui associamos o usuário
+      final parseUser = ParseUser('', '', '')..set(keyUserId, ad.user.id);
 
-    final adObject = ParseObject(keyAdTable);
+      final adObject = ParseObject(keyAdTable);
 
-    if (ad.id != null) adObject.objectId = ad.id;
+      if (ad.id != null) adObject.objectId = ad.id; // Apenas se o ID existir
 
-    final parseAcl = ParseACL(owner: parseUser);
-    parseAcl.setPublicReadAccess(allowed: true);
-    parseAcl.setPublicWriteAccess(allowed: false);
-    adObject.setACL(parseAcl);
+      final parseAcl = ParseACL(owner: parseUser);
+      parseAcl.setPublicReadAccess(allowed: true);
+      parseAcl.setPublicWriteAccess(allowed: false);
+      adObject.setACL(parseAcl);
 
-    adObject.set<String>(keyAdTitle, ad.title);
-    adObject.set<String>(keyAdDescription, ad.description);
-    adObject.set<bool>(keyAdHidePhone, ad.hidePhone);
-    adObject.set<num>(keyAdPrice, ad.price);
-    adObject.set<int>(keyAdStatus, ad.status.index);
+      adObject.set<String>(keyAdTitle, ad.title!);
+      adObject.set<String>(keyAdDescription, ad.description!);
+      adObject.set<bool>(keyAdHidePhone, ad.hidePhone);
+      adObject.set<num>(keyAdPrice, ad.price);
+      adObject.set<int>(keyAdStatus, ad.status.index);
+      adObject.set<String>(keyAdDistrict, ad.address.district);
+      adObject.set<String>(keyAdCity, ad.address.city.name);
+      adObject.set<String>(keyAdFederativeUnit, ad.address.uf.initials);
+      adObject.set<String>(keyAdPostalCode, ad.address.cep);
+      adObject.set<List<ParseFile>>(keyAdImages, parseImages);
+      adObject.set<ParseUser>(keyAdOwner, parseUser);
+      adObject.set<ParseObject>(keyAdCategory,
+          ParseObject(keyCategoryTable)..set(keyCategoryId, ad.category.id));
 
-    adObject.set<String>(keyAdDistrict, ad.address.district);
-    adObject.set<String>(keyAdCity, ad.address.city.name);
-    adObject.set<String>(keyAdFederativeUnit, ad.address.uf.initials);
-    adObject.set<String>(keyAdPostalCode, ad.address.cep);
+      final response = await adObject.save();
 
-    adObject.set<List<ParseFile>>(keyAdImages, parseImages);
+      if (!response.success) {
+        throw Exception(ParseErrors.getDescription(response.error!.code));
+      }
 
-    adObject.set<ParseUser>(keyAdOwner, parseUser);  // Aqui associamos o usuário ao anúncio
-
-    adObject.set<ParseObject>(keyAdCategory,
-        ParseObject(keyCategoryTable)..set(keyCategoryId, ad.category.id));
-
-    final response = await adObject.save();
-
-    if (!response.success) {
-      return Future.error(ParseErrors.getDescription(response.error!.code));
+      // Atualize o ID do anúncio após o salvamento
+      ad.id = adObject.objectId!;
+    } catch (e) {
+      print(e);
+      throw Exception('Falha ao salvar anúncio');
     }
-  } catch (e) {
-    print(e);
-    return Future.error('Falha ao salvar anúncio');
   }
-}
 
   Future<List<ParseFile>> saveImages(List images) async {
     final parseImages = <ParseFile>[];
@@ -156,7 +156,7 @@ class AdRepository {
     }
   }
 
-  Future<List<Ad>> getMyAds(UserModel user) async {
+  Future<List<ad.Ad>> getMyAds(UserModel user) async {
     final currentUser = ParseUser('', '', '')..set(keyUserId, user.id);
     final queryBuilder = QueryBuilder<ParseObject>(ParseObject(keyAdTable));
 
@@ -167,7 +167,7 @@ class AdRepository {
 
     final response = await queryBuilder.query();
     if (response.success && response.results != null) {
-      return response.results!.map((po) => Ad.fromParse(po)).toList();
+      return response.results!.map((po) => ad.Ad.fromParse(po)).toList();
     } else if (response.success && response.results == null) {
       return [];
     } else {
@@ -175,21 +175,24 @@ class AdRepository {
     }
   }
 
-  Future<void> sold(Ad ad) async {
+  Future<void> sold(ad.Ad ad) async {
     //pega referencia do objeto q esta como vendido
     final parseObject = ParseObject(keyAdTable)..set(keyAdId, ad.id);
-  //setar status do objeto
+    //setar status do objeto
     parseObject.set(keyAdStatus, AdStatus.SOLD.index);
-  //salvar nova alteracao
+    //salvar nova alteracao
     final response = await parseObject.save();
     if (!response.success)
       return Future.error(ParseErrors.getDescription(response.error!.code));
   }
 
-  Future<void> delete(Ad ad) async {
+  Future<void> delete(ad.Ad ad) async {
     final parseObject = ParseObject(keyAdTable)..set(keyAdId, ad.id);
 
-    parseObject.set(keyAdStatus, AdStatus.DELETED.index); //só altera o status assim some pro usuario mas mantem no banco
+    parseObject.set(
+        keyAdStatus,
+        AdStatus.DELETED
+            .index); //só altera o status assim some pro usuario mas mantem no banco
 
     final response = await parseObject.save();
     if (!response.success)

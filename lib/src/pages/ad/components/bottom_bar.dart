@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_box_project/src/models/ad/ad.dart';
 
 class BottomBar extends StatelessWidget {
-  BottomBar(this.ad);
+  const BottomBar(this.ad);
 
   final Ad ad;
 
@@ -29,8 +29,7 @@ class BottomBar extends StatelessWidget {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        final phone =
-                            ad.user.phone.replaceAll(RegExp('[^0-9]'), '');
+                        ad.user.phone.replaceAll(RegExp('[^0-9]'), '');
                         //launch('tel:$phone');
                       },
                       child: Container(

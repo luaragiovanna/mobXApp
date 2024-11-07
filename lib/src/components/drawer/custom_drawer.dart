@@ -8,10 +8,10 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.horizontal(right: Radius.circular(30)),
+      borderRadius: const BorderRadius.horizontal(right: Radius.circular(30)),
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.68, //pega altura da tela
-        child: Drawer(     
+        child: Drawer(
           surfaceTintColor: Colors.white,
           backgroundColor: Colors.white,
           child: ListView(

@@ -4,7 +4,7 @@ import 'package:flutter_box_project/src/repositories/user/keys/table_keys.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
 class UserRepository {
-  Future<UserModel> signUp(UserModel user) async {
+  Future<UserModel?> signUp(UserModel user) async {
     final parseUser = ParseUser(user.email, user.password, null);
 
     parseUser.set<String>(keyUserName, user.name);
@@ -33,6 +33,7 @@ class UserRepository {
       phone: parseUser.get(keyUserPhone),
       userType: UserType.values[int.parse(parseUser.get(keyUserType))],
       createdAt: parseUser.get(keyUserCreatedAt),
+      password: '',
     );
   }
 
@@ -48,7 +49,7 @@ class UserRepository {
     }
   }
 
-  Future<UserModel> currentUser() async {
+  Future<UserModel?> currentUser() async {
     final parseUser = await ParseUser.currentUser();
     if (parseUser == null) {
       throw Exception('Usuário não logado.');

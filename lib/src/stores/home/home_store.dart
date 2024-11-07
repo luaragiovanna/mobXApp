@@ -1,17 +1,20 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter_box_project/src/models/ad/ad.dart';
+import 'package:flutter_box_project/src/models/ad/ad.dart' as ad_model;
 import 'package:flutter_box_project/src/models/category/category_model.dart';
 import 'package:flutter_box_project/src/repositories/ad/ad_repository.dart';
 import 'package:flutter_box_project/src/stores/connectivity/connectivity_store.dart';
 import 'package:flutter_box_project/src/stores/home/filter/filter_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+
+import '../../models/ad/ad.dart';
+
 part 'home_store.g.dart';
 
 class HomeStore = _HomeStoreBase with _$HomeStore;
 
 abstract class _HomeStoreBase with Store {
-  final ConnectivityStore connectivityStore = GetIt.I<ConnectivityStore>(); //qualquer mudançaa no estado de conexao chama o autorun
+  final ConnectivityStore connectivityStore = GetIt.I<
+      ConnectivityStore>(); //qualquer mudançaa no estado de conexao chama o autorun
 
   _HomeStore() {
     autorun((_) async {
@@ -33,7 +36,7 @@ abstract class _HomeStoreBase with Store {
     });
   }
 
-  ObservableList<Ad> adList = ObservableList<Ad>();
+  ObservableList<ad_model.Ad> adList = ObservableList<ad_model.Ad>();
 
   @observable
   String search = '';
@@ -46,7 +49,6 @@ abstract class _HomeStoreBase with Store {
 
   @observable
   CategoryModel category = CategoryModel(id: '', description: '', name: '');
-
 
   @action
   void setCategory(CategoryModel value) {
@@ -89,7 +91,7 @@ abstract class _HomeStoreBase with Store {
   }
 
   @action
-  void addNewAds(List<Ad> newAds) {
+  void addNewAds(List<ad_model.Ad> newAds) {
     if (newAds.length < 10) lastPage = true;
     adList.addAll(newAds);
   }

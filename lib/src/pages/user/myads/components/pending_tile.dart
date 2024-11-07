@@ -4,7 +4,6 @@ import 'package:flutter_box_project/src/helpers/extensions.dart';
 import 'package:flutter_box_project/src/models/ad/ad.dart';
 import 'package:flutter_box_project/src/pages/ad/ad_screen.dart';
 
-
 class PendingTile extends StatelessWidget {
   PendingTile(this.ad);
 
@@ -44,7 +43,7 @@ class PendingTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        ad.title,
+                        ad.title!,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),

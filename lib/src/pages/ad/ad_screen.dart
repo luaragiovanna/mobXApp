@@ -6,7 +6,6 @@ import 'package:flutter_box_project/src/stores/user/favorite_store.dart';
 import 'package:flutter_box_project/src/stores/user/user_manager_store.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:path/path.dart';
 
 import 'components/bottom_bar.dart';
 import 'components/description_panel.dart';
@@ -15,7 +14,7 @@ import 'components/main_panel.dart';
 import 'components/user_panel.dart';
 
 class AdScreen extends StatelessWidget {
-  AdScreen(this.ad);
+  AdScreen(this.ad, {super.key});
 
   final Ad ad;
 
@@ -27,7 +26,7 @@ class AdScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Anúncio'),
+        title: const Text('Anúncio'),
         centerTitle: true,
         actions: [
           if (ad.status == AdStatus.ACTIVE && userManagerStore.isLoggedIn)
@@ -47,7 +46,7 @@ class AdScreen extends StatelessWidget {
         children: [
           ListView(
             children: [
-              Container(
+              SizedBox(
                 height: 280,
                 child: AnotherCarousel(
                   images: ad.images

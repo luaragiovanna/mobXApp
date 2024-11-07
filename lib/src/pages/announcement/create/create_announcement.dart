@@ -1,15 +1,10 @@
-import 'package:brasil_fields/brasil_fields.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_box_project/src/components/cep/cep_field.dart';
 import 'package:flutter_box_project/src/components/drawer/custom_drawer.dart';
 import 'package:flutter_box_project/src/components/error/error_box.dart';
 import 'package:flutter_box_project/src/models/ad/ad.dart';
-import 'package:flutter_box_project/src/pages/announcement/components/category/category_field.dart';
 import 'package:flutter_box_project/src/pages/announcement/components/images/images_field.dart';
 import 'package:flutter_box_project/src/pages/announcement/create/hidephone_field.dart';
-import 'package:flutter_box_project/src/pages/category/category_page.dart';
 import 'package:flutter_box_project/src/pages/user/myads/my_ads_page.dart';
 import 'package:flutter_box_project/src/stores/create_announcment/create_store.dart';
 import 'package:flutter_box_project/src/stores/page/page_store.dart';
@@ -23,6 +18,7 @@ class CreateAnnouncement extends StatefulWidget {
   final Ad ad;
 
   @override
+  // ignore: library_private_types_in_public_api
   _CreateScreenState createState() => _CreateScreenState();
 }
 
@@ -34,6 +30,15 @@ class _CreateScreenState extends State<CreateAnnouncement> {
   void initState() {
     super.initState();
     editing = widget.ad != null;
+
+    // Inicialize o CreateStore com os valores do anúncio caso esteja editando
+    if (editing) {
+      createStore.setTitle(widget.ad.title!);
+      createStore.setDescription(widget.ad.description!);
+      createStore.setPrice(widget.ad.price.toString());
+      createStore.setCategory(widget.ad.category);
+      createStore.images.addAll(widget.ad.images);
+    }
 
     when((_) => createStore.savedAd, () {
       if (editing)

@@ -1,23 +1,27 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter_box_project/src/repositories/user/keys/table_keys.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
-import 'package:flutter_box_project/src/repositories/user/keys/table_keys.dart';
-
 class CategoryModel {
-   late String id;
-   late String description;
   CategoryModel({
-      required this.id,
-      required this.description, required String name,
+    required this.id,
+    required this.description,
+    required this.name,
   });
 
-  CategoryModel.fromParse(ParseObject parseObject) {
-    id = parseObject.objectId!;
-    description = parseObject.get(keyCategoryDescription);
-  } //manda objeto parse e retorna um novo objeto category
+  // Construtor de fábrica para instanciar `CategoryModel` a partir de um ParseObject
+  factory CategoryModel.fromParse(ParseObject parseObject) {
+    return CategoryModel(
+      id: parseObject.objectId!,
+      description: parseObject.get(keyCategoryDescription),
+      name: parseObject.get(keyAdTitle),
+    );
+  }
 
-  
+  final String id;
+  final String description;
+  final String name;
 
   @override
-  String toString() => 'CategoryModel(id: $id, description: $description)';
+  String toString() =>
+      'CategoryModel(id: $id, description: $description, name: $name)';
 }

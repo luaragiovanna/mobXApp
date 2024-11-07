@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_box_project/src/components/card/empty_card.dart';
 import 'package:flutter_box_project/src/components/drawer/custom_drawer.dart';
 import 'package:flutter_box_project/src/models/category/category_model.dart';
 import 'package:flutter_box_project/src/pages/home/components/search_dialog.dart';

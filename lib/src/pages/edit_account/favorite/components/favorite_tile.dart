@@ -9,7 +9,9 @@ class FavoriteTile extends StatelessWidget {
   final Ad? ad;
   final FavoriteStore favoriteStore;
   const FavoriteTile(
-      {super.key,  this.ad, required this.favoriteStore}); //recebe anuncio como parametro
+      {super.key,
+      this.ad,
+      required this.favoriteStore}); //recebe anuncio como parametro
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,7 @@ class FavoriteTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        ad!.title,
+                        ad!.title!,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -66,7 +68,7 @@ class FavoriteTile extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              '${ad!.created.formattedDate()} - '
+                              '${ad!.createdAt.formattedDate()} - '
                               '${ad!.address.city.name} - '
                               '${ad!.address.uf.initials}',
                               style: TextStyle(

@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_box_project/src/models/ad/ad.dart';
@@ -6,12 +5,11 @@ import 'package:flutter_box_project/src/pages/ad/ad_screen.dart';
 import 'package:flutter_box_project/src/pages/announcement/create/create_announcement.dart';
 import 'package:flutter_box_project/src/stores/user/my_ads_store.dart';
 
-
 class ActiveTile extends StatelessWidget {
   ActiveTile(this.ad, this.store);
 
   final Ad ad;
-  final MyAdsStore store; //recebe a store por parametro e 
+  final MyAdsStore store; //recebe a store por parametro e
 
   final List<MenuChoice> choices = [
     MenuChoice(index: 0, title: 'Editar', iconData: Icons.edit),
@@ -51,7 +49,7 @@ class ActiveTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        ad.title,
+                        ad.title!,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
@@ -148,7 +146,6 @@ class ActiveTile extends StatelessWidget {
           ElevatedButton(
             onPressed: Navigator.of(context).pop, //fecha dialogo
             child: const Text('Não'),
-            
           ),
           ElevatedButton(
             onPressed: () {
@@ -156,7 +153,6 @@ class ActiveTile extends StatelessWidget {
               store.soldAd(ad);
             },
             child: Text('Sim'),
-           
           ),
         ],
       ),
@@ -173,7 +169,6 @@ class ActiveTile extends StatelessWidget {
           ElevatedButton(
             onPressed: Navigator.of(context).pop,
             child: Text('Não'),
-            
           ),
           ElevatedButton(
             onPressed: () {
@@ -182,7 +177,6 @@ class ActiveTile extends StatelessWidget {
               store.deleteAd(ad);
             },
             child: Text('Sim'),
-           
           ),
         ],
       ),
@@ -191,7 +185,8 @@ class ActiveTile extends StatelessWidget {
 }
 
 class MenuChoice {
-  MenuChoice({required this.index, required this.title, required this.iconData});
+  MenuChoice(
+      {required this.index, required this.title, required this.iconData});
 
   final int index;
   final String title;

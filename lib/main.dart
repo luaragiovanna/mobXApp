@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_box_project/src/pages/base/base_page.dart';
-
-import 'package:flutter_box_project/src/pages/home/filter/filter_page.dart';
-
-import 'package:flutter_box_project/src/repositories/ibge_api/cep_repository.dart';
-
 import 'package:flutter_box_project/src/stores/category/category_store.dart';
 import 'package:flutter_box_project/src/stores/connectivity/connectivity_store.dart';
 import 'package:flutter_box_project/src/stores/home/filter/filter_store.dart';
@@ -13,7 +8,6 @@ import 'package:flutter_box_project/src/stores/page/page_store.dart';
 import 'package:flutter_box_project/src/stores/user/favorite_store.dart';
 import 'package:flutter_box_project/src/stores/user/user_manager_store.dart';
 import 'package:get_it/get_it.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
 void main() async {

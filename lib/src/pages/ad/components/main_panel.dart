@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_box_project/src/helpers/extensions.dart';
 import 'package:flutter_box_project/src/models/ad/ad.dart';
 
-
 class MainPanel extends StatelessWidget {
   MainPanel(this.ad);
 
@@ -26,7 +25,7 @@ class MainPanel extends StatelessWidget {
           ),
         ),
         Text(
-          ad.title,
+          ad.title!,
           style: TextStyle(
             fontSize: 18,
             letterSpacing: 1,
@@ -36,7 +35,7 @@ class MainPanel extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 20, bottom: 18),
           child: Text(
-            'Publicado em ${ad.created.formattedDate()}',
+            'Publicado em ${ad.createdAt.formattedDate()}',
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w400,
